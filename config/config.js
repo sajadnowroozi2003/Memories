@@ -58,13 +58,13 @@ const CONFIG = {
 
   location: {
     name: "Where our story began",
-    latitude: "34,31716°",
-    longitude: "62,03586°",
+    latitude: 34.31716,
+    longitude: 62.03586,
   },
 
   dates: {
-    firstMeeting: "2021-10-09",
-    anniversary: "2026-03-01",
+    firstMeeting: "2026-8-2",
+    anniversary: "2021-10-9",
   },
 
   futureLetter: {
@@ -76,8 +76,9 @@ const CONFIG = {
   },
 
   // Easter egg secret image, shown after 5 logo clicks
-  secretImage: "assets/images/secret/secret.jpg",
+  secretImage: "assets/images/secret/secret.MP4",
 };
 
 // Freeze so no runtime code can accidentally mutate the source of truth
 Object.freeze(CONFIG);
+secret.MP4;
