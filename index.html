@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Memories of Sajjad and Nazanin</title>
+<meta name="description" content="A private digital memory box.">
+<meta name="theme-color" content="#050505">
+
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="icon" href="icons/icon-192.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Poppins:wght@300;400;500;600&family=Great+Vibes&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="src/css/style.css">
+<link rel="stylesheet" href="src/css/animation.css">
+<link rel="stylesheet" href="src/css/responsive.css">
+</head>
+<body class="no-scroll">
+
+<!-- ============ PRELOADER ============ -->
+<div id="preloader">
+  <canvas></canvas>
+  <div class="preloader-text" id="preloader-text" data-text="Memories of Sajjad & Nazanin"></div>
+</div>
+
+<!-- ============ PASSWORD SCREEN ============ -->
+<div id="password-screen">
+  <canvas style="position:absolute;inset:0;width:100%;height:100%;"></canvas>
+  <div class="password-card glass-card">
+    <h1 class="heading">A Hidden Memory Awaits</h1>
+    <p>Enter the secret date<br>to unlock our story.</p>
+    <div class="password-input-wrap">
+      <input type="password" id="memory-password" placeholder="• • • •" inputmode="text" autocomplete="off">
+    </div>
+    <button class="btn-gold" id="unlock-btn">Unlock Memories</button>
+    <div class="password-error"></div>
+  </div>
+</div>
+
+<!-- ============ CINEMATIC INTRO ============ -->
+<div id="intro-screen">
+  <div class="intro-line">Every picture tells a story...</div>
+  <div class="intro-line">But this one tells ours.</div>
+  <div class="intro-line">Welcome to our memories.</div>
+  <button class="btn-gold" id="intro-start-btn">Start Our Story</button>
+</div>
+
+<!-- ============ HEADER ============ -->
+<header class="site-header">
+  <div class="site-logo">S &amp; N</div>
+</header>
+
+<main id="main-content">
+
+  <!-- SECTION 04 — CHILDHOOD -->
+  <section class="section" id="childhood">
+    <div class="section-inner reveal">
+      <div class="eyebrow">Where it all began</div>
+      <h2 class="section-title">Before We Knew Each Other</h2>
+      <p class="section-desc">Two little children, two separate journeys, one beautiful story waiting to happen.</p>
+      <div class="childhood-grid">
+        <div class="childhood-photo reveal" data-label="Sajjad's Childhood">
+          <img src="assets/images/childhood/sajjad.jpg" alt="Sajjad's Childhood" loading="lazy"
+               onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22400%22><rect width=%22100%25%22 height=%22100%25%22 fill=%22%23111%22/></svg>'">
+          <div class="caption">Sajjad's Childhood</div>
+        </div>
+        <div class="childhood-photo reveal" data-label="Nazanin's Childhood">
+          <img src="assets/images/childhood/nazanin.jpg" alt="Nazanin's Childhood" loading="lazy"
+               onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22400%22><rect width=%22100%25%22 height=%22100%25%22 fill=%22%23111%22/></svg>'">
+          <div class="caption">Nazanin's Childhood</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 05 — TIMELINE -->
+  <section class="section" id="timeline">
+    <div class="section-inner reveal">
+      <div class="eyebrow">Our story</div>
+      <h2 class="section-title">A Timeline Worth Keeping</h2>
+      <p class="section-desc">Every chapter, from the very first page.</p>
+      <div class="timeline" id="timeline-container"></div>
+    </div>
+  </section>
+
+  <!-- SECTION 06 — LOVE LETTER -->
+  <section class="section" id="letter">
+    <div class="section-inner reveal">
+      <div class="eyebrow">For you</div>
+      <h2 class="section-title">A Love Letter</h2>
+      <p class="section-desc">Some things are better read than told.</p>
+      <div class="envelope" id="envelope">
+        <div class="envelope-body"></div>
+        <div class="envelope-flap"></div>
+        <div class="envelope-seal">S&amp;N</div>
+      </div>
+      <button class="btn-gold" id="open-letter-btn" style="margin-top:24px;">Open My Letter</button>
+      <div class="letter-paper" id="letter-paper"></div>
+    </div>
+  </section>
+
+  <!-- SECTION 07 — GALLERY -->
+  <section class="section" id="gallery">
+    <div class="section-inner reveal">
+      <div class="eyebrow">Captured moments</div>
+      <h2 class="section-title">Photo Memories</h2>
+      <p class="section-desc">A collection of the moments we never wanted to forget.</p>
+      <div class="gallery-grid" id="gallery-grid"></div>
+    </div>
+  </section>
+
+  <!-- SECTION 08 — MUSIC -->
+  <section class="section" id="music">
+    <div class="section-inner reveal">
+      <div class="eyebrow">Set the mood</div>
+      <h2 class="section-title">Our Song</h2>
+      <div class="music-player glass-card">
+        <div class="vinyl" id="vinyl"></div>
+        <div class="music-title"></div>
+        <div class="music-controls">
+          <button id="music-toggle">▶</button>
+          <div class="music-progress"><div class="music-progress-bar"></div></div>
+        </div>
+        <audio id="our-song-audio" preload="none"></audio>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 09 — OUR PLACE -->
+  <section class="section" id="place">
+    <div class="section-inner reveal">
+      <div class="eyebrow">A place that matters</div>
+      <h2 class="section-title" data-config="location.name">Where Our Story Began</h2>
+      <div class="place-card glass-card">
+        <div class="place-coords">Lat <span data-config="location.latitude"></span>, Lng <span data-config="location.longitude"></span></div>
+        <button class="btn-gold" id="open-map-btn">Open Location</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 10 — MEMORY JAR -->
+  <section class="section" id="memory-jar-section">
+    <div class="section-inner reveal">
+      <div class="eyebrow">A little surprise</div>
+      <h2 class="section-title">The Memory Jar</h2>
+      <p class="section-desc">Tap the jar for a random little memory.</p>
+      <div class="jar-wrap">
+        <div class="jar" id="memory-jar"><div class="glow"></div></div>
+        <div class="jar-message script" id="jar-message"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 12 — ANNIVERSARY COUNTER -->
+  <section class="section" id="anniversary">
+    <div class="section-inner reveal">
+      <div class="eyebrow">Still counting</div>
+      <h2 class="section-title">Our Story Has Been Growing For</h2>
+      <div class="counter-grid" id="anniversary-counter">
+        <div class="counter-box glass-card"><div class="counter-num c-days">000</div><div class="counter-label">Days</div></div>
+        <div class="counter-box glass-card"><div class="counter-num c-hours">00</div><div class="counter-label">Hours</div></div>
+        <div class="counter-box glass-card"><div class="counter-num c-mins">00</div><div class="counter-label">Minutes</div></div>
+        <div class="counter-box glass-card"><div class="counter-num c-secs">00</div><div class="counter-label">Seconds</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 13 — YEARLY MESSAGE -->
+  <section class="section" id="year-message">
+    <div class="section-inner reveal">
+      <div class="eyebrow">A message for now</div>
+      <div class="year-message-card glass-card">
+        <h3 class="heading" id="year-message-title" style="font-size:1.6rem;margin-bottom:12px;"></h3>
+        <p class="section-desc" id="year-message-text"></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 11 — FUTURE LETTER -->
+  <section class="section" id="future-letter-section">
+    <div class="section-inner reveal">
+      <div class="eyebrow">A time capsule</div>
+      <h2 class="section-title">A Letter From The Past</h2>
+      <p class="section-desc">Open this memory in the future.</p>
+      <div class="future-box glass-card glow-pulse" id="future-box">
+        <div class="lock-icon">🔒</div>
+        <div style="font-size:0.8rem;color:var(--text-secondary);">Tap to try</div>
+      </div>
+      <p class="future-message" id="future-message"></p>
+    </div>
+  </section>
+
+  <!-- FOREVER ENDING -->
+  <section class="section" id="ending">
+    <div class="section-inner reveal">
+      <div class="ending-hearts">❤</div>
+      <h2 class="section-title script" style="font-size:clamp(2.2rem,7vw,3.6rem);">Forever Ours</h2>
+      <p class="section-desc">Whatever comes next, I want it with you.</p>
+      <button class="btn-gold" id="install-btn" style="display:none;margin-top:24px;">Install This Memory</button>
+    </div>
+  </section>
+
+</main>
+
+<script src="config/config.js"></script>
+<script src="src/js/effects.js"></script>
+<script src="src/js/auth.js"></script>
+<script src="src/js/timeline.js"></script>
+<script src="src/js/gallery.js"></script>
+<script src="src/js/music.js"></script>
+<script src="src/js/pwa.js"></script>
+<script src="src/js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+/* ==========================================================
+   ANIMATION UTILITIES
+   Slow, elegant, cinematic — never fast or gamey.
+   ========================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  filter: blur(6px);
+  transition: opacity 1.1s cubic-bezier(0.16,1,0.3,1),
+              transform 1.1s cubic-bezier(0.16,1,0.3,1),
+              filter 1.1s cubic-bezier(0.16,1,0.3,1);
+}
+.reveal.in-view {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+}
+
+.reveal-delay-1 { transition-delay: 0.12s; }
+.reveal-delay-2 { transition-delay: 0.24s; }
+.reveal-delay-3 { transition-delay: 0.36s; }
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+.fade-in { animation: fadeIn 1.2s ease forwards; }
+
+@keyframes goldGlow {
+  0%, 100% { box-shadow: 0 0 0 rgba(212,175,55,0); }
+  50% { box-shadow: 0 0 40px rgba(212,175,55,0.45); }
+}
+.glow-pulse { animation: goldGlow 2.4s ease-in-out infinite; }
+
+/* smooth scroll-snap sections feel (optional, Lenis handles the physics) */
+.section { scroll-margin-top: 0; }

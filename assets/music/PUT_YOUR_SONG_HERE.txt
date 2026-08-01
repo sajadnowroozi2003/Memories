@@ -1,0 +1,7 @@
+Add your song here as: our-song.mp3
+
+The player expects this exact path by default:
+  assets/music/our-song.mp3
+
+If you'd rather use a different filename, update it in config/config.js:
+  music: { file: "assets/music/your-filename.mp3" }

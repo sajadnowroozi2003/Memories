@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Admin — Memories of Sajjad and Nazanin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../src/css/style.css">
+<link rel="stylesheet" href="../src/css/animation.css">
+<link rel="stylesheet" href="../src/css/responsive.css">
+<style>
+  body { overflow-x: hidden; }
+  .admin-shell { max-width: 880px; margin: 0 auto; padding: 100px 24px 80px; }
+  .admin-header { text-align: center; margin-bottom: 48px; }
+  .admin-header p { color: var(--text-secondary); font-size: 0.85rem; max-width: 560px; margin: 12px auto 0; line-height: 1.7; }
+  .admin-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px; margin-bottom: 48px; }
+  .stat-card { padding: 24px; text-align: center; }
+  .stat-num { font-family: var(--font-heading); font-size: 2rem; color: var(--gold); }
+  .stat-label { font-size: 0.75rem; color: var(--text-secondary); margin-top: 6px; text-transform: uppercase; letter-spacing: 0.08em; }
+  .panel { padding: 28px; margin-bottom: 24px; text-align: left; }
+  .panel h3 { font-size: 1.2rem; margin-bottom: 6px; }
+  .panel .hint { color: var(--text-secondary); font-size: 0.8rem; margin-bottom: 18px; line-height: 1.6; }
+  textarea, input[type=text], input[type=password] {
+    width: 100%; background: rgba(255,255,255,0.04); border: 1px solid var(--glass-border);
+    border-radius: 10px; padding: 12px 14px; color: var(--white-soft); font-family: 'Poppins', monospace;
+    font-size: 0.85rem; margin-bottom: 12px; outline: none;
+  }
+  textarea:focus, input:focus { border-color: var(--gold); }
+  textarea { min-height: 140px; resize: vertical; }
+  .row { display: flex; gap: 10px; flex-wrap: wrap; }
+  .btn-small { padding: 10px 20px; font-size: 0.75rem; }
+  #login-screen { position: fixed; inset: 0; z-index: 100; display: flex; align-items: center; justify-content: center; background: var(--bg-primary); padding: 24px; }
+  #login-screen .password-card { max-width: 380px; }
+  .admin-app { display: none; }
+  .warn { font-size: 0.75rem; color: #e0b25a; background: rgba(212,175,55,0.08); border: 1px solid var(--gold-soft); padding: 12px 16px; border-radius: 10px; margin-bottom: 24px; line-height: 1.6; }
+</style>
+</head>
+<body class="no-scroll">
+
+<div id="login-screen">
+  <div class="password-card glass-card">
+    <h1 class="heading">Admin Access</h1>
+    <p>This area manages your memory content.</p>
+    <input type="password" id="admin-password" placeholder="Admin password">
+    <button class="btn-gold" id="admin-login-btn" style="width:100%; justify-content:center;">Enter Admin</button>
+    <div class="password-error" id="admin-error"></div>
+  </div>
+</div>
+
+<div class="admin-app" id="admin-app">
+  <div class="admin-shell">
+    <div class="admin-header">
+      <h1 class="heading">Memories — Admin</h1>
+      <p>This is a <strong>static</strong> site (no server, no database), so this panel can't save changes back
+        to your files automatically. What it <em>can</em> do: show you the current content, let you edit it in a
+        friendly form, and generate the exact JSON/Markdown text to paste back into the matching file in
+        <code>content/</code>. Think of it as a content co-pilot, not a live CMS.</p>
+    </div>
+
+    <div class="admin-grid" id="stats"></div>
+
+    <div class="panel glass-card">
+      <h3>Gallery Manager</h3>
+      <p class="hint">Add/remove entries, edit captions, then copy the JSON below into <code>content/gallery.json</code>. Photo files themselves must be uploaded to <code>assets/images/gallery/</code> — this panel can't upload files to your repo.</p>
+      <div id="gallery-editor"></div>
+      <button class="btn-gold btn-small" id="gallery-add-row">+ Add Photo Entry</button>
+      <p class="hint" style="margin-top:16px;">Generated JSON:</p>
+      <textarea id="gallery-output" readonly></textarea>
+    </div>
+
+    <div class="panel glass-card">
+      <h3>Timeline Manager</h3>
+      <p class="hint">Add a new event (date, title, description, optional image filename), then copy the JSON into <code>content/timeline.json</code>.</p>
+      <div id="timeline-editor"></div>
+      <button class="btn-gold btn-small" id="timeline-add-row">+ Add Event</button>
+      <p class="hint" style="margin-top:16px;">Generated JSON:</p>
+      <textarea id="timeline-output" readonly></textarea>
+    </div>
+
+    <div class="panel glass-card">
+      <h3>Letter Editor</h3>
+      <p class="hint">Edit the love letter below (Markdown supported: **bold**, *italic*, # headings), then paste it into <code>content/letter.md</code>.</p>
+      <textarea id="letter-editor" style="min-height:220px;"></textarea>
+    </div>
+
+    <div class="panel glass-card">
+      <h3>Music Manager</h3>
+      <p class="hint">Upload your song file to <code>assets/music/our-song.mp3</code>, replacing the existing file (keep the same filename, or update <code>music.file</code> in <code>config/config.js</code>).</p>
+    </div>
+
+    <div class="panel glass-card">
+      <h3>Settings — Names, Dates, Location, Theme</h3>
+      <p class="hint">All of these live in <code>config/config.js</code>. Edit that file directly — it's plain, commented JavaScript, safe to open in any text editor.</p>
+    </div>
+
+    <div class="panel glass-card">
+      <h3>Password Hash Generator</h3>
+      <p class="hint">Never store a plain-text password in config.js. Type a password below, copy the resulting hash into <code>security.memoryPasswordHash</code> or <code>security.adminPasswordHash</code>.</p>
+      <input type="text" id="hash-input" placeholder="Type a password to hash">
+      <button class="btn-gold btn-small" id="hash-btn">Generate SHA-256 Hash</button>
+      <textarea id="hash-output" readonly style="min-height:60px; margin-top:12px;"></textarea>
+    </div>
+
+    <div class="warn">
+      Security note: this admin panel and the memory password are meant to keep casual visitors out of a
+      private page, not to protect against a determined attacker with access to your source code. Don't use
+      it for anything more sensitive than a sentimental gift.
+    </div>
+  </div>
+</div>
+
+<script src="../config/config.js"></script>
+<script src="../src/js/auth.js"></script>
+<script src="admin.js"></script>
+</body>
+</html>

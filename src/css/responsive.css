@@ -1,0 +1,40 @@
+/* ==========================================================
+   RESPONSIVE RULES — Mobile-first priority (QR scan = phone)
+   ========================================================== */
+
+/* Base = mobile (320px+) already covered in style.css with clamp() */
+
+@media (max-width: 480px) {
+  .section { padding: 80px 18px; }
+  .childhood-grid { flex-direction: column; align-items: center; }
+  .childhood-photo { width: 80vw; max-width: 320px; }
+  .password-card { padding: 36px 22px; }
+  .timeline-item { padding: 22px; }
+  .counter-box { min-width: 68px; padding: 14px 12px; }
+  .counter-num { font-size: 1.5rem; }
+  .letter-paper { padding: 32px 22px; font-size: 1.02rem; }
+  .music-player { padding: 24px; }
+}
+
+/* Tablet */
+@media (min-width: 600px) and (max-width: 1024px) {
+  .gallery-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* Desktop */
+@media (min-width: 1025px) {
+  .section-inner { max-width: 1080px; }
+  .gallery-grid { grid-template-columns: repeat(4, 1fr); }
+  .timeline-item:nth-child(odd) { margin-right: 52%; }
+  .timeline-item:nth-child(even) { margin-left: 52%; }
+}
+
+/* Large screens */
+@media (min-width: 1440px) {
+  .section-inner { max-width: 1200px; }
+}
+
+/* Touch-specific: bigger tap targets */
+@media (hover: none) {
+  .btn-gold, #music-toggle, .jar, .gallery-item { min-height: 44px; }
+}
