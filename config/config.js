@@ -62,11 +62,10 @@ const CONFIG = {
     longitude: 62.03586,
   },
 
-  dates: {
-    firstMeeting: "2026-8-2",
-    anniversary: "2021-10-9",
-  },
-
+dates: {
+  firstMeeting: "2026-08-02",
+  anniversary: "2021-10-09",
+},
   futureLetter: {
     enabled: true,
     unlockDate: "2026-01-01",
