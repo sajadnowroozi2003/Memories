@@ -29,10 +29,19 @@ const TimelineModule = (() => {
         <div class="t-date">${escapeHtml(ev.date || '')}</div>
         <div class="t-title heading">${escapeHtml(ev.title || '')}</div>
         <div class="t-desc">${escapeHtml(ev.description || '')}</div>
-        ${ev.image ? `<img src="assets/images/gallery/${escapeHtml(ev.image)}" alt="${escapeHtml(ev.title || '')}" loading="lazy" onerror="this.style.display='none'">` : ''}
+        ${ev.image ? mediaTag(ev.image, ev.title) : ''}
       </div>
     `).join('');
     Effects.initScrollReveal('.timeline-item');
+  }
+
+  function mediaTag(filename, title) {
+    const src = `assets/images/gallery/${escapeHtml(filename)}`;
+    const isVideo = /\.(mp4|webm|mov|m4v)$/i.test(filename);
+    if (isVideo) {
+      return `<video src="${src}" controls playsinline preload="metadata" style="border-radius:12px;margin-top:16px;width:100%;" onerror="this.style.display='none'"></video>`;
+    }
+    return `<img src="${src}" alt="${escapeHtml(title || '')}" loading="lazy" onerror="this.style.display='none'">`;
   }
 
   function escapeHtml(str) {

@@ -149,15 +149,26 @@ const Effects = (() => {
   }
 
   function showSecretImage() {
+    const src = CONFIG.secretImage;
+    const isVideo = /\.(mp4|webm|mov|m4v)$/i.test(src);
+    const mediaHtml = isVideo
+      ? `<video src="${src}" controls autoplay playsinline style="width:100%;border-radius:12px;margin-bottom:16px;" onerror="this.style.display='none'"></video>`
+      : `<img src="${src}" alt="secret" onerror="this.style.display='none'">`;
     const overlay = document.createElement('div');
     overlay.className = 'modal-overlay active';
     overlay.innerHTML = `
       <div class="modal-box glass-card">
-        <img src="${CONFIG.secretImage}" alt="secret" onerror="this.style.display='none'">
+        ${mediaHtml}
         <div class="script" style="font-size:1.6rem;">A hidden memory, just for us</div>
         <div class="modal-close">Tap to close</div>
       </div>`;
-    overlay.addEventListener('click', () => overlay.remove());
+    overlay.addEventListener('click', (e) => {
+      // don't close when interacting with video controls (play/pause/seek)
+      if (isVideo && e.target.tagName === 'VIDEO') return;
+      overlay.remove();
+      const video = overlay.querySelector('video');
+      if (video) video.pause();
+    });
     document.body.appendChild(overlay);
   }
 
